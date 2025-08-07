@@ -84,10 +84,6 @@ Several devices in my home lack the processor speed and in particular the single
   remote-cert-tls server
   auth-nocache
   ```
-- To clean up stopped containers:
-  ```bash
-  docker container prune
-  ```
 
 ---
 
