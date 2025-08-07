@@ -18,9 +18,9 @@ if [ -z $PROXYPORT ]; then
     PROXYPORT="8080";
 fi
 
-# Start openvpn
+# Start openvpn (forks to de-escalated user perms)
 echo "[DockTunnel] Starting OpenVPN...";
-openvpn --config /vpn/$VPNCONFNAME --cd /vpn --daemon --log /var/log/openvpn.log;
+openvpn --config /vpn/$VPNCONFNAME --cd /vpn --user openvpn --group openvpn --daemon --log /var/log/openvpn.log;
 
 # Wait for tun0 to come up
 echo "[DockTunnel] Waiting for VPN tunnel (tun0)...";
@@ -32,8 +32,8 @@ echo "[DockTunnel] VPN tunnel established.";
 
 echo "[DockTunnel] Starting proxy server on $PROXYBINDIP:$PROXYPORT";
 if [ -z $ENABLEPROXYLOGGING ]; then
-    microsocks -i $PROXYBINDIP -p $PROXYPORT -b tun0 2>/dev/null;
+    sudo -u microsocks microsocks -i $PROXYBINDIP -p $PROXYPORT -b tun0 2>/dev/null;
 else
     echo "[DockTunnel] WARNING: Proxy logging is enabled.";
-    microsocks -i $PROXYBINDIP -p $PROXYPORT -b tun0;
+    sudo -u microsocks microsocks -i $PROXYBINDIP -p $PROXYPORT -b tun0;
 fi
