@@ -4,6 +4,10 @@
 
 DockTunnel is a simple Docker-based tool that securely routes your traffic through a VPN using a lightweight SOCKS proxy. It supports **any VPN provider that uses OpenVPN**, giving you a flexible and isolated tunneling setup inside a container.
 
+**Why did I make this?**
+
+Several devices in my home lack the processor speed and in particular the single-thread performance needed to handle moderate to high data throughput, especially when encrypting proxy traffic before sending it through the VPN tunnel. Offloading this task allowed multiple devices on my home network to access the VPN simultaneously without hitting a performance bottleneck.
+
 ---
 
 ## 🔐 Features
