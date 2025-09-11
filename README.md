@@ -6,7 +6,7 @@ DockTunnel is a simple Docker-based tool that securely routes your traffic throu
 
 **Why did I make this?**
 
-Several devices in my home lack the processor speed and in particular the single-thread performance needed to handle moderate to high data throughput, especially when encrypting proxy traffic before sending it through the VPN tunnel. Offloading this task allowed multiple devices on my home network to access the VPN simultaneously without hitting a performance bottleneck.
+Several devices in my home lack the processor speed (in particular the single-thread performance needed to handle moderate to high data throughput) to be encrypted to be sent over the VPN: Offloading this task allowed multiple devices on my home network to access the VPN simultaneously without hitting a performance bottleneck.
 
 ---
 
@@ -40,9 +40,18 @@ Several devices in my home lack the processor speed and in particular the single
 
 2. Place your `.ovpn/.conf` config file into the project directory.
 
-3. Run the container:
+3. Run the container (replace vpn folder path and "sydneyvpn.conf" with your own values):
    ```bash
-   docker run --cap-add=NET_ADMIN --device=/dev/net/tun      -v "$(pwd)/:/vpn/:ro"      -e VPNCONFNAME=vpn.conf      -p 1080:1080      docktunnel
+   docker run \
+    -d \
+    --cap-add=NET_ADMIN \
+    --device=/dev/net/tun \
+    --restart unless-stopped \
+    --name docktunnel \
+    -v /path/to/vpn/folder/:/vpn \
+    -e VPNCONFNAME=sydneyvpn.conf \
+    -p 1080:1080 \
+    docktunnel
    ```
 
 4. Point your applications to the SOCKS proxy at:
