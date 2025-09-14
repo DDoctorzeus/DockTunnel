@@ -50,7 +50,7 @@ Several devices in my home lack the processor speed (in particular the single-th
     --name docktunnel \
     -v /path/to/vpn/folder/:/vpn \
     -e VPNCONFNAME=sydneyvpn.conf \
-    -p 1080:1080 \
+    -p 8080:8080 \
     docktunnel
    ```
 
